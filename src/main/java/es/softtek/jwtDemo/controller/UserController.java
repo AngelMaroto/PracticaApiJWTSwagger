@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import es.softtek.jwtDemo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import es.softtek.jwtDemo.dto.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/ejemplojwt")
@@ -33,19 +36,23 @@ public class UserController {
     @PostMapping("/user")
 
     // public User login(  @PathVariable String username,@PathVariable String pwd)
-    public User login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
+    public ResponseEntity<?> login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
 
+        try {
 
-        User userBD = userRepository.findByCredentials(username,pwd);
+            User userBD = userRepository.findByCredentials(username, pwd);
 
-        if (userBD != null) {
-            String token = getJWTToken(username);
+            if (userBD != null) {
+                String token = getJWTToken(username);
 
-            userBD.setToken(token);
+                userBD.setToken(token);
 
-            return userBD;
-        } else {
-            return null;
+                return new ResponseEntity<>(userBD, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Error de contraseña",HttpStatus.NOT_ACCEPTABLE);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Error de búsqueda", e);
         }
 
         /*
