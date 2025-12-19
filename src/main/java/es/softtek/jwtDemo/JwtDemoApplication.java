@@ -49,7 +49,7 @@ public class JwtDemoApplication {
             http.csrf().disable()
                     .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                     .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/user").permitAll()//antMatchers OBSOLETO
+                    .antMatchers(HttpMethod.POST, "/ejemplojwt/user").permitAll()//antMatchers OBSOLETO
                     //.requestMatchers(HttpMethod.POST, "/user").permitAll()
                     .antMatchers(AUTH_WHITELIST).permitAll()
                     .antMatchers("/categorias/**").permitAll()
