@@ -48,7 +48,7 @@ public class UserController {
                 userBD.setToken(token);
 
                 return new ResponseEntity<>(userBD, HttpStatus.OK);
-            } else {
+            } else{
                 return new ResponseEntity<>("Error de contraseña",HttpStatus.NOT_ACCEPTABLE);
             }
         } catch (Exception e) {
