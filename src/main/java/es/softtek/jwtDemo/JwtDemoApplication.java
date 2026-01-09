@@ -52,7 +52,11 @@ public class JwtDemoApplication {
                     .antMatchers(HttpMethod.POST, "/ejemplojwt/user").permitAll()//antMatchers OBSOLETO
                     //.requestMatchers(HttpMethod.POST, "/user").permitAll()
                     .antMatchers(AUTH_WHITELIST).permitAll()
+					//opcion A categorias es público
                     .antMatchers("/categorias/**").permitAll()
+					//opcion B productos es público
+					.antMatchers("/productos/**").permitAll()
+					//el resto es privado
                     .anyRequest().authenticated();//cualquier solicitud debe ser autenticada, de lo contrario, mi aplicación Spring devolverá una respuesta 401.
 
 /*

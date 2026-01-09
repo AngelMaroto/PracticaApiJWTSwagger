@@ -7,4 +7,4 @@ CREATE TABLE  users (
                        password VARCHAR(64) NOT NULL
 );
 
-INSERT INTO users  VALUES (1, 'juan@gmail.com', SHA2('juan',256));
+INSERT INTO users  VALUES (1, 'juan', SHA2('juan',256));
